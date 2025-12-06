@@ -1,20 +1,11 @@
 name: TorrServer
-version: "1.3"
+version: "1.4"
 slug: torrserver
-description: TorrServer media streaming server (custom add-on)
-url: https://github.com/yourname/torrserver-hass
-startup: services
-boot: auto
+description: TorrServer for Home Assistant (with embedded binary)
 arch:
   - amd64
+startup: services
 ports:
   8090/tcp: 8090
-ports_description:
-  8090/tcp: "Web interface & API"
-host_network: false
-map:
-  - config:rw
-options:
-  args: ""
-schema:
-  args: "str?"
+options: {}
+schema: {}
