@@ -1,0 +1,16 @@
+name: Build Add-on Docker Image
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Docker image (local test)
+        run: |
+          cd torrserver
+          docker build -t torrserver-hass:test .
