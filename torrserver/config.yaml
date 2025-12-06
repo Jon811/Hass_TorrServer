@@ -1,0 +1,13 @@
+name: TorrServer
+version: "1.2"
+slug: torrserver
+description: TorrServer for Home Assistant
+url: https://github.com/yourname/torrserver-hass
+arch:
+  - amd64
+startup: services
+ports:
+  8090/tcp: 8090
+host_network: true
+options: {}
+schema: {}
