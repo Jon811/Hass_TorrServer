@@ -1,5 +1,5 @@
 FROM debian:stable-slim
-LABEL maintainer="yourname"
+LABEL maintainer="Jon811"
 
 WORKDIR /app
 
@@ -9,8 +9,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Download TorrServer binary (amd64)
-RUN wget -O /app/TorrServer \
-    https://github.com/YouROK/TorrServer/releases/latest/download/TorrServer-linux-amd64 \
+RUN COPY bin/TorrServer /app/TorrServer \
     && chmod +x /app/TorrServer
 
 # Create a non-root user (optional but recommended for addons)
