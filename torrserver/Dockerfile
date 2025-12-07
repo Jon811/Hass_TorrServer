@@ -1,13 +1,34 @@
+# torrserver/Dockerfile
 ARG BUILD_FROM
 FROM ${BUILD_FROM}
 
+# Устанавливаем wget для скачивания TorrServer
+RUN apk add --no-cache wget
+
+# Создаем рабочую директорию
 WORKDIR /app
 
-# Скачиваем TorrServer (только для amd64 для примера)
-RUN wget -q https://github.com/YouROK/TorrServer/releases/download/MatriX.136/TorrServer-linux-amd64 \
-    && mv TorrServer-linux-amd64 TorrServer \
+# Скачиваем TorrServer для всех архитектур
+ARG TORRSERVER_VERSION="136"
+ARG BUILD_ARCH
+
+# Автоматический выбор архитектуры
+RUN set -ex \
+    && case "${BUILD_ARCH}" in \
+        aarch64) TARGET_ARCH="arm64" ;; \
+        amd64) TARGET_ARCH="amd64" ;; \
+        armhf) TARGET_ARCH="arm" ;; \
+        armv7) TARGET_ARCH="arm7" ;; \
+        i386) TARGET_ARCH="386" ;; \
+        *) echo "ERROR: Unsupported architecture: ${BUILD_ARCH}" && exit 1 ;; \
+    esac \
+    && echo "Downloading TorrServer for ${TARGET_ARCH}..." \
+    && wget -q "https://github.com/YouROK/TorrServer/releases/download/MatriX.${TORRSERVER_VERSION}/TorrServer-linux-${TARGET_ARCH}" \
+    && mv "TorrServer-linux-${TARGET_ARCH}" TorrServer \
     && chmod +x TorrServer
 
 # Копируем скрипт запуска
 COPY run.sh /
-RUN chmod +x /run.sh
+RUN chmod a+x /run.sh
+
+# НИКАКОГО CMD ИЛИ ENTRYPOINT! Home Assistant сам запускает run.sh
