@@ -40,8 +40,8 @@ if [ -f /data/options.json ]; then
     [ -n "$TORRENT_OPTIONS" ] && EXTRA_OPTS="$EXTRA_OPTS $TORRENT_OPTIONS"
 fi
 
-# Формируем команду запуска (БЕЗ -s параметра!)
-CMD="/app/TorrServer -p ${PORT} -t ${TORRENT_PORT} -ct ${CACHE_SIZE} -ll ${LOG_LEVEL}${EXTRA_OPTS} -d /data"
+# Формируем команду запуска (БЕЗ -s параметра!)-ct ${CACHE_SIZE} -ll ${LOG_LEVEL}
+CMD="/app/TorrServer -p ${PORT} -t ${TORRENT_PORT} ${EXTRA_OPTS} -d /data"
 
 echo "========================================"
 echo $CMD
