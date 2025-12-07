@@ -1,6 +1,6 @@
 # torrserver/Dockerfile
 ARG BUILD_FROM
-FROM ${BUILD_FROM}
+FROM $BUILD_FROM
 
 # Устанавливаем wget для скачивания TorrServer
 RUN apk add --no-cache wget
