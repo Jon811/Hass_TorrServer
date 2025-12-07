@@ -1,7 +1,7 @@
 name: "TorrServer"
-version: "1.7.6"
+version: "1.7.7"
 slug: "torrserver"
-description: "TorrServer MatriX.136 for Home Assistant"
+description: "TorrServer for Home Assistant"
 arch:
   - amd64
 startup: "services"
@@ -9,46 +9,53 @@ boot: "auto"
 host_network: true
 ports:
   8090/tcp: 8090
-  49165/tcp: 49165
-  49165/udp: 49165
+  443/tcp: 443
 ports_description:
-  8090/tcp: "Web Interface and Streaming API"
-  49165/tcp: "Torrent Client (TCP)"
-  49165/udp: "Torrent Client (UDP)"
+  8090/tcp: "Web Interface (HTTP)"
+  443/tcp: "Web Interface (HTTPS)"
 map:
   - share:rw
   - media:rw
+  - ssl:ro
 options:
   port: 8090
-  torrent_port: 49165
-  cache_size: 512
-  log_level: "info"
-  disable_tls: false
-  disable_encryption: false
-  preload_cache: false
-  disable_udp: false
-  disable_tcp: false
-  disable_dht: false
-  disable_pex: false
-  disable_trackers: false
-  read_timeout: 30
-  write_timeout: 30
+  path: "/data"
+  ip: ""
+  ssl: false
+  sslport: 443
+  torrentsdir: ""
+  torrentaddr: ":0"
   rdb: false
-  torrent_options: ""
+  httpauth: false
+  dontkill: false
+  ui: false
+  maxsize: "0"
+  sslcert: ""
+  sslkey: ""
+  logpath: ""
+  weblogpath: ""
+  pubipv4: ""
+  pubipv6: ""
+  searchwa: false
+  tgtoken: ""
 schema:
   port: int?
-  torrent_port: int?
-  cache_size: int?
-  log_level: list(info|warning|error|debug)?
-  disable_tls: bool?
-  disable_encryption: bool?
-  preload_cache: bool?
-  disable_udp: bool?
-  disable_tcp: bool?
-  disable_dht: bool?
-  disable_pex: bool?
-  disable_trackers: bool?
-  read_timeout: int?
-  write_timeout: int?
+  path: str?
+  ip: str?
+  ssl: bool?
+  sslport: int?
+  torrentsdir: str?
+  torrentaddr: str?
   rdb: bool?
-  torrent_options: str?
+  httpauth: bool?
+  dontkill: bool?
+  ui: bool?
+  maxsize: str?
+  sslcert: str?
+  sslkey: str?
+  logpath: str?
+  weblogpath: str?
+  pubipv4: str?
+  pubipv6: str?
+  searchwa: bool?
+  tgtoken: str?
