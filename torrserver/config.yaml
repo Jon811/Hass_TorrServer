@@ -1,11 +1,54 @@
-name: TorrServer
+name: "TorrServer"
 version: "1.7"
-slug: torrserver
-description: TorrServer for Home Assistant (with embedded binary)
+slug: "torrserver"
+description: "TorrServer MatriX.136 for Home Assistant"
 arch:
   - amd64
-startup: services
+startup: "services"
+boot: "auto"
+host_network: true
 ports:
   8090/tcp: 8090
-options: {}
-schema: {}
+  49165/tcp: 49165
+  49165/udp: 49165
+ports_description:
+  8090/tcp: "Web Interface and Streaming API"
+  49165/tcp: "Torrent Client (TCP)"
+  49165/udp: "Torrent Client (UDP)"
+map:
+  - share:rw
+  - media:rw
+options:
+  port: 8090
+  torrent_port: 49165
+  cache_size: 512
+  log_level: "info"
+  disable_tls: false
+  disable_encryption: false
+  preload_cache: false
+  disable_udp: false
+  disable_tcp: false
+  disable_dht: false
+  disable_pex: false
+  disable_trackers: false
+  read_timeout: 30
+  write_timeout: 30
+  rdb: false
+  torrent_options: ""
+schema:
+  port: int?
+  torrent_port: int?
+  cache_size: int?
+  log_level: list(info|warning|error|debug)?
+  disable_tls: bool?
+  disable_encryption: bool?
+  preload_cache: bool?
+  disable_udp: bool?
+  disable_tcp: bool?
+  disable_dht: bool?
+  disable_pex: bool?
+  disable_trackers: bool?
+  read_timeout: int?
+  write_timeout: int?
+  rdb: bool?
+  torrent_options: str?

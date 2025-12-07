@@ -1,7 +1,13 @@
 FROM debian:stable-slim
 WORKDIR /app
 
+# Копируем TorrServer бинарник
 COPY TorrServer-linux-amd64 /app/TorrServer
 RUN chmod +x /app/TorrServer
 
-CMD ["/app/TorrServer", "--port", "8090"]
+# Копируем скрипт запуска
+COPY run.sh /
+RUN chmod +x /run.sh
+
+# Используем скрипт вместо прямого CMD
+CMD ["/run.sh"]
