@@ -1,14 +1,11 @@
 name: "TorrServer"
-version: "1.6.11"
+version: "1.6.12"
 slug: "torrserver"
 description: "Torrent streaming server vMatriX.136 for Home Assistant"
 arch:
-  - aarch64
   - amd64
-  - armhf
-  - armv7
-  - i386
-startup: "application"
+startup: services
+init: false
 boot: "auto"
 host_network: true
 host_dbus: false
