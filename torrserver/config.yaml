@@ -1,5 +1,5 @@
 name: "TorrServer"
-version: "1.6.5"
+version: "1.6.6"
 slug: "torrserver"
 description: "Torrent streaming server vMatriX.136 for Home Assistant"
 arch:
