@@ -42,7 +42,10 @@ fi
 
 # Формируем команду запуска (БЕЗ -s параметра!)
 CMD="/app/TorrServer -p ${PORT} -t ${TORRENT_PORT} -ct ${CACHE_SIZE} -ll ${LOG_LEVEL}${EXTRA_OPTS} -d /data"
-
+echo "=== TorrServer Help ===" && \
+    /app/TorrServer --help || true && \
+    echo "=== TorrServer Version ===" && \
+    /app/TorrServer --version || true
 echo "========================================"
 echo "Starting TorrServer MatriX.136"
 echo "Port: ${PORT} (web interface & streaming)"
