@@ -1,6 +1,7 @@
 #!/usr/bin/env bashio
 
-# Простой запуск с параметрами из HA
+bashio::log.info "Starting TorrServer..."
+
 exec /app/TorrServer \
     -p "$(bashio::config 'port' '8090')" \
     -s "$(bashio::config 'stream_port' '8091')" \

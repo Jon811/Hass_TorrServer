@@ -24,11 +24,11 @@ RUN set -ex \
     esac \
     && echo "Downloading TorrServer for ${TARGET_ARCH}..." \
     && wget -q "https://github.com/YouROK/TorrServer/releases/download/MatriX.${TORRSERVER_VERSION}/TorrServer-linux-${TARGET_ARCH}" \
-    && mv "TorrServer-linux-${TARGET_ARCH}" TorrServer \
-    && chmod +x TorrServer
 
-# Копируем скрипт запуска
-COPY run.sh /
-RUN chmod a+x /run.sh
 
-# НИКАКОГО CMD ИЛИ ENTRYPOINT! Home Assistant сам запускает run.sh
+COPY TorrServer-linux-amd64 /app/TorrServer
+RUN chmod +x /app/TorrServer
+
+# S6 will automatically run /etc/services.d/torrserver/run
+COPY run.sh /etc/services.d/torrserver/run
+RUN chmod +x /etc/services.d/torrserver/run
