@@ -16,14 +16,21 @@
 FROM debian:stable-slim
 WORKDIR /app
 
-COPY TorrServer-linux-amd64 /app/TorrServer
-RUN chmod +x /app/TorrServer
+# COPY TorrServer-linux-amd64 /app/TorrServer
+# RUN chmod +x /app/TorrServer
+# Загружаем TorrServer из GitHub
+ARG TORRSERVER_VERSION="136"
+ARG TORRSERVER_ARCH="amd64"
 
-# Проверяем параметры
-RUN echo "=== TorrServer Help ===" && \
-    /app/TorrServer --help || true && \
-    echo "=== TorrServer Version ===" && \
-    /app/TorrServer --version || true
+# Скачиваем последнюю версию
+RUN echo "Downloading TorrServer MatriX.${TORRSERVER_VERSION} for ${TORRSERVER_ARCH}..." && \
+    wget -q "https://github.com/YouROK/TorrServer/releases/download/MatriX.${TORRSERVER_VERSION}/TorrServer-linux-${TORRSERVER_ARCH}" \
+    -O /app/TorrServer && \
+    chmod +x /app/TorrServer && \
+    echo "TorrServer downloaded successfully"
+
+# Проверяем что бинарник работает
+RUN /app/TorrServer --help 2>&1 | head -5 && echo "Binary check passed"
 
 COPY run.sh /
 RUN chmod +x /run.sh
