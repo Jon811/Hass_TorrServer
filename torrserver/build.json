@@ -1,8 +1,0 @@
-{
-  "build_from": {
-    "amd64": "ghcr.io/home-assistant/amd64-addon-base:latest"
-  },
-  "args": {
-    "TORRSERVER_VERSION": "136"
-  }
-}
