@@ -1,10 +1,9 @@
 #!/usr/bin/env bashio
 
-# Просто запускаем с дефолтными параметрами если проблемы
-/app/TorrServer \
-    -p 8090 \
-    -s 8091 \
-    -t 49165 \
-    -ct 512 \
-    -ll info \
+# Простой запуск с параметрами из HA
+exec /app/TorrServer \
+    -p "$(bashio::config 'port' '8090')" \
+    -s "$(bashio::config 'stream_port' '8091')" \
+    -t "$(bashio::config 'torrent_port' '49165')" \
+    -ct "$(bashio::config 'cache_size' '512')" \
     -d /data/torrserver
