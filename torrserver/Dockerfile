@@ -14,6 +14,12 @@
 
 
 FROM debian:stable-slim
+# Устанавливаем wget для загрузки
+RUN apt-get update && apt-get install -y \
+    wget \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+    
 WORKDIR /app
 
 # COPY TorrServer-linux-amd64 /app/TorrServer
