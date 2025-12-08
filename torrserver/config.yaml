@@ -1,5 +1,5 @@
 name: "TorrServer"
-version: "1.7.13"
+version: "1.7.14"
 slug: "torrserver"
 description: "TorrServer for Home Assistant"
 arch:
