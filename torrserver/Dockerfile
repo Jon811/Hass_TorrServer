@@ -1,25 +1,9 @@
-# FROM debian:stable-slim
-# WORKDIR /app
+ARG BUILD_FROM
+FROM ${BUILD_FROM}
 
-# # Копируем TorrServer бинарник
-# COPY TorrServer-linux-amd64 /app/TorrServer
-# RUN chmod +x /app/TorrServer
-
-# # Копируем скрипт запуска
-# COPY run.sh /
-# RUN chmod +x /run.sh
-
-# # Используем скрипт вместо прямого CMD
-# CMD ["/run.sh"]
-
-
-FROM debian:stable-slim
-# Устанавливаем wget для загрузки
-RUN apt-get update && apt-get install -y \
+RUN apk add --no-cache \
     wget \
-    ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
-    
+    ca-certificates
 WORKDIR /app
 
 # COPY TorrServer-linux-amd64 /app/TorrServer
