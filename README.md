@@ -1,4 +1,4 @@
-# Hass_TorrServer - TorrServer Add-on для Home Assistant
+# Hass_TorrServer - TorrServer Add-on для Home Assistant на  amd64
 
 [![GitHub Release](https://img.shields.io/github/v/release/Jon811/Hass_TorrServer)](https://github.com/Jon811/Hass_TorrServer/releases)
 [![HA Add-on](https://img.shields.io/badge/Home%20Assistant-Add--on-blue.svg)](https://www.home-assistant.io/)
@@ -9,10 +9,8 @@
 ## 📋 Возможности
 
 - ✅ **Автоматическая установка** - бинарник скачивается при сборке
-- ✅ **Последняя версия TorrServer** - MatriX.136
+- ✅ **версия TorrServer** - MatriX.136
 - ✅ **Настраиваемые параметры** через веб-интерфейс Home Assistant
-- ✅ **Поддержка HTTPS** с настраиваемыми SSL сертификатами
-- ✅ **Встроенный веб-интерфейс** TorrServer
 - ✅ **Автоматическое обновление** при обновлении аддона
 
 ## 🚀 Установка
