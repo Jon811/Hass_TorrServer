@@ -28,7 +28,7 @@ options:
   ssl: false
   sslport: 443
   torrentsdir: ""
-  torrentaddr: ":0"
+  torrentaddr: ":49165"
   rdb: false
   httpauth: false
   dontkill: false
