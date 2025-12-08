@@ -1,8 +1,10 @@
 name: "TorrServer"
-version: "1.7.21"
+version: "1.7.22"
 slug: "torrserver"
 description: "TorrServer for Home Assistant"
 init: true
+build:
+  dockerfile: Dockerfile
 arch:
   - aarch64 # Raspberry Pi 4, Odroid, 64-bit ARM
   - amd64 # Standard PCs/Servers, 64-bit x86
