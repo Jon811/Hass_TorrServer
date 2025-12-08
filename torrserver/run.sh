@@ -1,12 +1,8 @@
-#!/usr/bin/with-contenv bashio
+#!/usr/bin/with-contenv sh
 # run.sh для TorrServer с поддержкой s6-overlay
 
 # Ждем инициализации s6-overlay
 sleep 2
-
-bashio::log.info "========================================"
-bashio::log.info "Starting TorrServer Add-on"
-bashio::log.info "========================================"
 
 # Базовая конфигурация
 PORT=8090
@@ -15,7 +11,6 @@ TORRENT_ADDR=":49165"  # ← ДОБАВЛЕНО
 
 # Если есть конфиг HA
 if [ -f /data/options.json ]; then
-    bashio::log.info "Reading configuration from Home Assistant..."
     
     # Основные параметры
     PORT=$(grep -o '"port":[^,}]*' /data/options.json | cut -d: -f2 | tr -d ' "' || echo "8090")
@@ -53,10 +48,6 @@ fi
 [ "$UI" = "true" ] && CMD="$CMD --ui"
 [ -n "$MAXSIZE" ] && CMD="$CMD --maxsize=${MAXSIZE}"
 
-bashio::log.info "Starting TorrServer..."
-bashio::log.info "Port: ${PORT}"
-bashio::log.info "Data path: ${DATA_PATH}"
-bashio::log.info "Torrent address: ${TORRENT_ADDR}"
 
 # Запускаем
 exec $CMD
