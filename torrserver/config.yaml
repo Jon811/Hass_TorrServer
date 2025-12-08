@@ -1,5 +1,5 @@
 name: "TorrServer"
-version: "1.7.20"
+version: "1.7.21"
 slug: "torrserver"
 description: "TorrServer for Home Assistant"
 init: true
@@ -9,8 +9,8 @@ arch:
   - armhf # Raspberry Pi 2/3, 32-bit ARM hard float
   - armv7 # 32-bit ARM v7 devices
   - i386 # Legacy 32-bit x86 systems
-startup: "services"
-boot: "auto"
+startup: services
+boot: auto
 host_network: true
 ports:
   8090/tcp: 8090
