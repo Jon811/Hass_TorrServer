@@ -1,14 +1,15 @@
 name: "TorrServer"
-version: "1.7.18"
+version: "1.7.19"
 slug: "torrserver"
 description: "TorrServer for Home Assistant"
+init: true
 arch:
   - aarch64 # Raspberry Pi 4, Odroid, 64-bit ARM
   - amd64 # Standard PCs/Servers, 64-bit x86
   - armhf # Raspberry Pi 2/3, 32-bit ARM hard float
   - armv7 # 32-bit ARM v7 devices
   - i386 # Legacy 32-bit x86 systems
-startup: "application"
+startup: services
 boot: "auto"
 host_network: true
 ports:
