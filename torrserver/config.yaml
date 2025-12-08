@@ -8,7 +8,7 @@ arch:
   - armhf # Raspberry Pi 2/3, 32-bit ARM hard float
   - armv7 # 32-bit ARM v7 devices
   - i386 # Legacy 32-bit x86 systems
-startup: "service"
+startup: "application"
 boot: "auto"
 host_network: true
 ports:
