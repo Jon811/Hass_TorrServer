@@ -1,31 +1,50 @@
-#!/usr/bin/with-contenv bashio
+#!/bin/bash
+# run.sh для вашей версии TorrServer
 
-bashio::log.info "Starting TorrServer..."
+# Базовая конфигурация
+PORT=8090
+DATA_PATH="/data"
 
-PORT=$(bashio::config 'port')
-DATA_PATH=$(bashio::config 'path')
-TORRENTADDR=$(bashio::config 'torrentaddr')
-IP=$(bashio::config 'ip')
-SSL=$(bashio::config 'ssl')
-SSLPORT=$(bashio::config 'sslport')
-TORRENTS_DIR=$(bashio::config 'torrentsdir')
-RDB=$(bashio::config 'rdb')
-HTTPAUTH=$(bashio::config 'httpauth')
-DONTKILL=$(bashio::config 'dontkill')
-UI=$(bashio::config 'ui')
-MAXSIZE=$(bashio::config 'maxsize')
+# Если есть конфиг HA
+if [ -f /data/options.json ]; then
+    echo "Reading configuration from Home Assistant..."
+    
+    # Основные параметры
+    PORT=$(grep -o '"port":[^,}]*' /data/options.json | cut -d: -f2 | tr -d ' "' || echo "8090")
+    DATA_PATH=$(grep -o '"path":[^,}]*' /data/options.json | cut -d: -f2 | tr -d ' "' || echo "/data")
+    
+    # Дополнительные параметры
+    IP=$(grep -o '"ip":"[^"]*"' /data/options.json | cut -d'"' -f4)
+    SSL=$(grep -o '"ssl":[^,}]*' /data/options.json | cut -d: -f2 | tr -d ' "')
+    SSLPORT=$(grep -o '"sslport":[^,}]*' /data/options.json | cut -d: -f2 | tr -d ' "')
+    TORRENTS_DIR=$(grep -o '"torrentsdir":"[^"]*"' /data/options.json | cut -d'"' -f4)
+    TORRENT_ADDR=$(grep -o '"torrentaddr":"[^"]*"' /data/options.json | cut -d'"' -f4)
+    RDB=$(grep -o '"rdb":[^,}]*' /data/options.json | cut -d: -f2 | tr -d ' "')
+    HTTPAUTH=$(grep -o '"httpauth":[^,}]*' /data/options.json | cut -d: -f2 | tr -d ' "')
+    DONTKILL=$(grep -o '"dontkill":[^,}]*' /data/options.json | cut -d: -f2 | tr -d ' "')
+    UI=$(grep -o '"ui":[^,}]*' /data/options.json | cut -d: -f2 | tr -d ' "')
+    MAXSIZE=$(grep -o '"maxsize":[^,}]*' /data/options.json | cut -d: -f2 | tr -d ' "')
+fi
 
-CMD="/app/TorrServer --port=${PORT} --path=${DATA_PATH} --torrentaddr=${TORRENTADDR}"
+# Формируем команду
+CMD="/app/TorrServer --port=${PORT} --path=${DATA_PATH}"
 
-[ -n "$IP" ] && CMD="${CMD} --ip=${IP}"
-[ "$SSL" = "true" ] && CMD="${CMD} --ssl"
-[ -n "$SSLPORT" ] && CMD="${CMD} --sslport=${SSLPORT}"
-[ -n "$TORRENTS_DIR" ] && CMD="${CMD} --torrentsdir=${TORRENTS_DIR}"
-[ "$RDB" = "true" ] && CMD="${CMD} --rdb"
-[ "$HTTPAUTH" = "true" ] && CMD="${CMD} --httpauth"
-[ "$DONTKILL" = "true" ] && CMD="${CMD} --dontkill"
-[ "$UI" = "true" ] && CMD="${CMD} --ui"
-[ "$MAXSIZE" -gt 0 ] && CMD="${CMD} --maxsize=${MAXSIZE}"
+# Добавляем опциональные параметры
+[ -n "$IP" ] && CMD="$CMD --ip=${IP}"
+[ "$SSL" = "true" ] && CMD="$CMD --ssl"
+[ -n "$SSLPORT" ] && CMD="$CMD --sslport=${SSLPORT}"
+[ -n "$TORRENTS_DIR" ] && CMD="$CMD --torrentsdir=${TORRENTS_DIR}"
+[ -n "$TORRENT_ADDR" ] && CMD="$CMD --torrentaddr=${TORRENT_ADDR}"
+[ "$RDB" = "true" ] && CMD="$CMD --rdb"
+[ "$HTTPAUTH" = "true" ] && CMD="$CMD --httpauth"
+[ "$DONTKILL" = "true" ] && CMD="$CMD --dontkill"
+[ "$UI" = "true" ] && CMD="$CMD --ui"
+[ -n "$MAXSIZE" ] && CMD="$CMD --maxsize=${MAXSIZE}"
 
-bashio::log.info "Command: ${CMD}"
-exec ${CMD}
+echo "========================================"
+echo "Starting TorrServer"
+echo "Command: $CMD"
+echo "========================================"
+
+# Запускаем
+exec $CMD
