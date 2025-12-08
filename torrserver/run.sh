@@ -1,5 +1,12 @@
-#!/bin/bash
-# run.sh для вашей версии TorrServer
+#!/usr/bin/with-contenv bashio
+# run.sh для TorrServer с поддержкой s6-overlay
+
+# Ждем инициализации s6-overlay
+sleep 2
+
+bashio::log.info "========================================"
+bashio::log.info "Starting TorrServer Add-on"
+bashio::log.info "========================================"
 
 # Базовая конфигурация
 PORT=8090
@@ -7,7 +14,7 @@ DATA_PATH="/data"
 
 # Если есть конфиг HA
 if [ -f /data/options.json ]; then
-    echo "Reading configuration from Home Assistant..."
+    bashio::log.info "Reading configuration from Home Assistant..."
     
     # Основные параметры
     PORT=$(grep -o '"port":[^,}]*' /data/options.json | cut -d: -f2 | tr -d ' "' || echo "8090")
@@ -41,10 +48,8 @@ CMD="/app/TorrServer --port=${PORT} --path=${DATA_PATH}"
 [ "$UI" = "true" ] && CMD="$CMD --ui"
 [ -n "$MAXSIZE" ] && CMD="$CMD --maxsize=${MAXSIZE}"
 
-echo "========================================"
-echo "Starting TorrServer"
-echo "Command: $CMD"
-echo "========================================"
+bashio::log.info "Starting TorrServer..."
+bashio::log.info "Command: $CMD"
 
 # Запускаем
 exec $CMD
