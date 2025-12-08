@@ -41,5 +41,5 @@ RUN echo "Verifying binary..." && \
 # Копируем скрипт запуска
 COPY run.sh /
 RUN chmod +x /run.sh
-
+CMD ["/run.sh"]
 # Home Assistant сам запускает run.sh
